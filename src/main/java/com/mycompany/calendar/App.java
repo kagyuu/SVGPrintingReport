@@ -27,14 +27,35 @@ public class App {
     private static final DateFormat monthFormat = new SimpleDateFormat("MMMMM", Locale.US);
     private static final DateFormat dayFormat = new SimpleDateFormat("d");
     private static final String[] IDX = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H"};
+    
+    /**
+     * 休日 (内閣府発表 http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html)
+     * 平成27年（2015）の国民の祝日
+     * 5月6日及び9月22日は休日となります
+     * 名称       月日
+     * 元日         1月 1日
+     * 成人の日      1月12日
+     * 建国記念の日   2月11日
+     * 春分の日      3月21日
+     * 昭和の日      4月29日
+     * 憲法記念日    5月 3日
+     * みどりの日    5月 4日
+     * こどもの日    5月 5日
+     * 休日         5月 6日
+     * 海の日       7月20日
+     * 敬老の日     9月21日
+     * 休日        9月22日
+     * 秋分の日     9月23日
+     * 体育の日    10月12日
+     * 文化の日    11月 3日
+     * 勤労感謝の日 11月23日
+     * 天皇誕生日   12月23日
+     */
     private static final String[] holidays = {
-        "2013-01-01", "2013-01-02", "2013-01-03", "2013-01-14", "2013-02-11", "2013-03-20", "2013-04-29",
-        "2013-05-03", "2013-05-04", "2013-05-05", "2013-05-06", "2013-07-15", "2013-09-16", "2013-09-23",
-        "2013-10-14", "2013-11-03", "2013-11-04", "2013-11-23", "2013-12-23",
-        "2014-01-01", "2014-01-02", "2014-01-03", "2014-01-13", "2014-02-11", "2014-03-21", "2014-04-29",
-        "2014-05-03", "2014-05-04", "2014-05-05", "2014-05-06", "2014-07-21", "2014-09-15", "2014-09-23",
-        "2014-10-13", "2014-11-03", "2014-11-23", "2014-11-24", "2014-12-23",
         "2015-01-01", "2015-01-02", "2015-01-03", "2015-01-12", "2015-02-11", "2015-03-21", "2015-04-29",
+        "2015-05-03", "2015-05-04", "2015-05-05", "2015-05-06", "2015-07-20", "2015-09-21", "2015-09-22",
+        "2015-09-23", "2015-10-12", "2015-11-03", "2015-11-23", "2015-12-23",
+        "2016-01-01", "2016-01-02", "2016-01-03", "2016-01-11", "2016-02-11", "2016-03-21"
     };
 
     private static byte[] template = null;
@@ -44,23 +65,18 @@ public class App {
         template = readTemplate();
         
         Calendar cal = Calendar.getInstance();
-        
-        cal.set(Calendar.YEAR, 2013);
-        int maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1; // 1つ余分に
-        for (int week = 1; week <= maxWeek; week++) {
-            createSvgCal(2013,week);
-        }
-        
-        cal.set(Calendar.YEAR, 2014);
-        maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
-        for (int week = 1; week <= maxWeek; week++) {
-            createSvgCal(2014,week);
-        }
+        int maxWeek;
         
         cal.set(Calendar.YEAR, 2015);
         maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
         for (int week = 1; week <= maxWeek; week++) {
             createSvgCal(2015,week);
+        }
+        
+        cal.set(Calendar.YEAR, 2016);
+        maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
+        for (int week = 1; week <= maxWeek; week++) {
+            createSvgCal(2016,week);
         }
     }
     private static void createSvgCal(int year, int week) {        
