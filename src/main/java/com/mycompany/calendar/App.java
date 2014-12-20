@@ -74,8 +74,8 @@ public class App {
         }
         
         cal.set(Calendar.YEAR, 2016);
-        maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
-        for (int week = 1; week <= maxWeek; week++) {
+        //maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
+        for (int week = 1; week <= 14; week++) {
             createSvgCal(2016,week);
         }
     }
