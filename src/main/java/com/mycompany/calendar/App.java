@@ -30,32 +30,31 @@ public class App {
     
     /**
      * 休日 (内閣府発表 http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html)
-     * 平成27年（2015）の国民の祝日
-     * 5月6日及び9月22日は休日となります
-     * 名称       月日
-     * 元日         1月 1日
-     * 成人の日      1月12日
-     * 建国記念の日   2月11日
-     * 春分の日      3月21日
-     * 昭和の日      4月29日
-     * 憲法記念日    5月 3日
-     * みどりの日    5月 4日
-     * こどもの日    5月 5日
-     * 休日         5月 6日
-     * 海の日       7月20日
-     * 敬老の日     9月21日
-     * 休日        9月22日
-     * 秋分の日     9月23日
-     * 体育の日    10月12日
-     * 文化の日    11月 3日
+     * 平成28年（2016）の国民の祝日
+     * 3月21は休日となります。
+     * 名称        月日
+     * 元日	  1月1日
+     * 成人の日	  1月11日
+     * 建国記念の日 2月11日
+     * 春分の日	  3月20日
+     * 昭和の日	  4月29日
+     * 憲法記念日	  5月3日
+     * みどりの日	  5月4日
+     * こどもの日	  5月5日
+     * 海の日	  7月18日
+     * 山の日	  8月11日
+     * 敬老の日	  9月19日
+     * 秋分の日	  9月22日
+     * 体育の日	  10月10日
+     * 文化の日	  11月3日
      * 勤労感謝の日 11月23日
-     * 天皇誕生日   12月23日
+     * 天皇誕生日	  12月23日
      */
     private static final String[] holidays = {
-        "2015-01-01", "2015-01-02", "2015-01-03", "2015-01-12", "2015-02-11", "2015-03-21", "2015-04-29",
-        "2015-05-03", "2015-05-04", "2015-05-05", "2015-05-06", "2015-07-20", "2015-09-21", "2015-09-22",
-        "2015-09-23", "2015-10-12", "2015-11-03", "2015-11-23", "2015-12-23",
-        "2016-01-01", "2016-01-02", "2016-01-03", "2016-01-11", "2016-02-11", "2016-03-21"
+        "2016-01-01", "2016-01-02", "2016-01-03", "2016-01-11", "2016-02-11", "2016-03-20", "2016-04-29",
+        "2016-05-03", "2016-05-04", "2016-05-05", "2016-07-18", "2016-08-11", "2016-09-19", "2016-09-22",
+        "2016-10-10", "2016-11-03", "2016-11-23", "2016-12-23",
+        "2017-01-01", "2017-01-02", "2017-01-03", "2017-01-09", "2017-02-11", "2017-03-20"
     };
 
     private static byte[] template = null;
@@ -67,16 +66,16 @@ public class App {
         Calendar cal = Calendar.getInstance();
         int maxWeek;
         
-        cal.set(Calendar.YEAR, 2015);
+        cal.set(Calendar.YEAR, 2016);
         maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
         for (int week = 1; week <= maxWeek; week++) {
-            createSvgCal(2015,week);
+            createSvgCal(2016,week);
         }
         
-        cal.set(Calendar.YEAR, 2016);
+        cal.set(Calendar.YEAR, 2017);
         //maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
         for (int week = 1; week <= 14; week++) {
-            createSvgCal(2016,week);
+            createSvgCal(2017,week);
         }
     }
     private static void createSvgCal(int year, int week) {        
@@ -110,8 +109,12 @@ public class App {
         
         String calFile = String.format("%s/Desktop/Cal/%d-%02d.svg", System.getProperty("user.home"), year, week);
         System.out.println(calFile);
+        File calSvg = new File(calFile);
+        if (!calSvg.getParentFile().isDirectory()) {
+            calSvg.getParentFile().mkdirs();
+        }
         try (
-                PrintWriter pw = new PrintWriter(new File(calFile), "UTF-8");
+                PrintWriter pw = new PrintWriter(calSvg, "UTF-8");
                 ){
             String calString = new String(template, "UTF-8");
             for (Map.Entry<String, String> entry : valMap.entrySet()) {
