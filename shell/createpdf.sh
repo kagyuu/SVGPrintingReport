@@ -2,7 +2,7 @@
 
 sync;sync
 
-TARGET=2015_diary.pdf
+TARGET=2016_diary.pdf
 
 rm $TARGET
  
