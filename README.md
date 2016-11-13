@@ -21,4 +21,4 @@ SVGPrintingReport
     - 必要があれば brew unlink pkftk でアンインストールして
     - https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg をインストール
 
-1. diary.pdf ができるので、痕は普通に両面印刷する
+1. diary.pdf ができるので、あとは普通に両面印刷する
