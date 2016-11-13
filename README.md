@@ -17,8 +17,8 @@ SVGPrintingReport
   - inkscape (macOS の場合 homebrew でインストール)
   - ghostscript (macOS の場合 homebrew でインストール)
   - pdftk (macOS の場合 homebrew 版だめ (2017年現在))
-  -- http://stackoverflow.com/questions/32505951/pdftk-server-on-os-x-10-11
-  -- 必要があれば brew unlink pkftk でアンインストールして
-  -- https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg をインストール
+    - http://stackoverflow.com/questions/32505951/pdftk-server-on-os-x-10-11
+    - 必要があれば brew unlink pkftk でアンインストールして
+    - https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg をインストール
 
 1. diary.pdf ができるので、痕は普通に両面印刷する
