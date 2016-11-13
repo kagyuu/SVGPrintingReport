@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.attribute.PosixFilePermission;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,10 +18,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang.time.DateUtils;
 
 /**
@@ -58,6 +65,24 @@ public class App {
         for (int week = 1; week <= 14; week++) {
             createSvgCal(cal.get(Calendar.YEAR) + 1, week);
         }
+        
+        // copy shells
+        Set<PosixFilePermission> perm = new HashSet<>();
+        perm.add(PosixFilePermission.OWNER_READ);
+        perm.add(PosixFilePermission.OWNER_WRITE);
+        perm.add(PosixFilePermission.OWNER_EXECUTE);
+        
+        for (String file : new String[]{"A3toA4.sh", "svg2cvs.sh", "createBook.sh", "blanksheet-a4-portrait.pdf"}){
+            File src = new File(String.format("src/main/resources/%s", file));
+            File dest = new File(String.format("%s/Desktop/Cal/%s", System.getProperty("user.home"), file));
+            try {
+                Files.copy(src.toPath(), dest.toPath());
+                Files.setPosixFilePermissions(dest.toPath(), perm);
+                System.out.println(file);
+            } catch (IOException ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }        
     }
 
     private static void createSvgCal(int year, int week) {
