@@ -1,20 +1,24 @@
 package com.mycompany.calendar;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang.time.DateUtils;
 
 /**
@@ -27,58 +31,36 @@ public class App {
     private static final DateFormat monthFormat = new SimpleDateFormat("MMMMM", Locale.US);
     private static final DateFormat dayFormat = new SimpleDateFormat("d");
     private static final String[] IDX = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H"};
-    
+
     /**
-     * 休日 (内閣府発表 http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html)
-     * 平成28年（2016）の国民の祝日
-     * 3月21は休日となります。
-     * 名称        月日
-     * 元日	  1月1日
-     * 成人の日	  1月11日
-     * 建国記念の日 2月11日
-     * 春分の日	  3月20日
-     * 昭和の日	  4月29日
-     * 憲法記念日	  5月3日
-     * みどりの日	  5月4日
-     * こどもの日	  5月5日
-     * 海の日	  7月18日
-     * 山の日	  8月11日
-     * 敬老の日	  9月19日
-     * 秋分の日	  9月22日
-     * 体育の日	  10月10日
-     * 文化の日	  11月3日
-     * 勤労感謝の日 11月23日
-     * 天皇誕生日	  12月23日
+     * 休日 (内閣府発表 http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html) から
+     * syukujitsu.csv をダウンロードして /src/main/resources に配置する
      */
-    private static final String[] holidays = {
-        "2016-01-01", "2016-01-02", "2016-01-03", "2016-01-11", "2016-02-11", "2016-03-20", "2016-04-29",
-        "2016-05-03", "2016-05-04", "2016-05-05", "2016-07-18", "2016-08-11", "2016-09-19", "2016-09-22",
-        "2016-10-10", "2016-11-03", "2016-11-23", "2016-12-23",
-        "2017-01-01", "2017-01-02", "2017-01-03", "2017-01-09", "2017-02-11", "2017-03-20"
-    };
+    private static List<Date> holidays;
 
     private static byte[] template = null;
-    
+
     public static void main(String[] args) {
 
+        holidays = readSyukujitsu();
         template = readTemplate();
-        
+
         Calendar cal = Calendar.getInstance();
         int maxWeek;
+
         
-        cal.set(Calendar.YEAR, 2016);
+        cal.setTime(holidays.get(0));
         maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
         for (int week = 1; week <= maxWeek; week++) {
-            createSvgCal(2016,week);
+            createSvgCal(cal.get(Calendar.YEAR), week);
         }
-        
-        cal.set(Calendar.YEAR, 2017);
-        //maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
+
         for (int week = 1; week <= 14; week++) {
-            createSvgCal(2017,week);
+            createSvgCal(cal.get(Calendar.YEAR) + 1, week);
         }
     }
-    private static void createSvgCal(int year, int week) {        
+
+    private static void createSvgCal(int year, int week) {
         Map<String, String> valMap = new LinkedHashMap<>();
         valMap.put("#Start", getDate(year, week, Calendar.MONDAY));
         valMap.put("#End", getDate(year, week + 1, Calendar.SUNDAY));
@@ -88,7 +70,7 @@ public class App {
         valMap.put("#WedClass", getClass(year, week, Calendar.WEDNESDAY));
         valMap.put("#ThuClass", getClass(year, week, Calendar.THURSDAY));
         valMap.put("#FriClass", getClass(year, week, Calendar.FRIDAY));
-        
+
         valMap.put("#Mon", getDate(year, week, Calendar.MONDAY));
         valMap.put("#Tue", getDate(year, week, Calendar.TUESDAY));
         valMap.put("#Wed", getDate(year, week, Calendar.WEDNESDAY));
@@ -96,7 +78,7 @@ public class App {
         valMap.put("#Fri", getDate(year, week, Calendar.FRIDAY));
         valMap.put("#Sat", getDate(year, week, Calendar.SATURDAY));
         valMap.put("#Sun", getDate(year, week + 1, Calendar.SUNDAY));
-        
+
         valMap.putAll(getCalendar(year, week, -1));
         valMap.putAll(getCalendar(year, week, 0));
         valMap.putAll(getCalendar(year, week, +1));
@@ -104,9 +86,9 @@ public class App {
         valMap.put(
                 "<!-- CURRENT WEEK RECT -->",
                 String.format(
-                    "<rect width=\"190\" height=\"11\" x=\"1037\" y=\"%d\"/>", 
-                    getRow(year, week)));
-        
+                        "<rect width=\"190\" height=\"11\" x=\"1037\" y=\"%d\"/>",
+                        getRow(year, week)));
+
         String calFile = String.format("%s/Desktop/Cal/%d-%02d.svg", System.getProperty("user.home"), year, week);
         System.out.println(calFile);
         File calSvg = new File(calFile);
@@ -114,8 +96,7 @@ public class App {
             calSvg.getParentFile().mkdirs();
         }
         try (
-                PrintWriter pw = new PrintWriter(calSvg, "UTF-8");
-                ){
+                PrintWriter pw = new PrintWriter(calSvg, "UTF-8");) {
             String calString = new String(template, "UTF-8");
             for (Map.Entry<String, String> entry : valMap.entrySet()) {
                 calString = calString.replaceAll(entry.getKey(), entry.getValue());
@@ -138,8 +119,8 @@ public class App {
                 row += 1;
             }
         }
-        
-        switch(row){
+
+        switch (row) {
             case 1:
                 return -245;
             case 2:
@@ -154,11 +135,11 @@ public class App {
                 return -187;
         }
     }
-    
+
     private static String getDate(int year, int week, int day) {
         Calendar cal = Calendar.getInstance();
         cal.setWeekDate(year, week, day);
-        return dateFormat.format(cal.getTime());        
+        return dateFormat.format(cal.getTime());
     }
 
     private static String getClass(int year, int week, int day) {
@@ -174,7 +155,7 @@ public class App {
         if (day < 10) {
             dayString = "&#160;" + dayString;
         }
-        
+
         return (isHoliday(date) ? " class=\"sunday\">" : ">") + dayString;
     }
 
@@ -187,14 +168,9 @@ public class App {
             return false;
         }
 
-        for (String holiday : holidays) {
-            try {
-                if (DateUtils.isSameDay(date, dateFormat.parse(holiday))) {
-                    return true;
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-                throw new RuntimeException(ex);
+        for (Date holiday : holidays) {
+            if (DateUtils.isSameDay(date, holiday)) {
+                return true;
             }
         }
         return false;
@@ -293,5 +269,38 @@ public class App {
         }
 
         return valMap;
+    }
+
+    private static List<Date> readSyukujitsu() {
+        try (BufferedReader r = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream("src/main/resources/syukujitsu.csv")))) {
+
+                    DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                    List<Date> holidayArray = new ArrayList<>();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        String[] part = line.split(",");
+                        try {
+                            holidayArray.add(df.parse(part[1]));
+                        } catch (ParseException | ArrayIndexOutOfBoundsException e) {
+                        }
+                        try {
+                            holidayArray.add(df.parse(part[3]));
+                        } catch (ParseException | ArrayIndexOutOfBoundsException e) {
+                        }
+                    }
+
+                    Collections.sort(holidayArray);
+
+                    System.out.println("HOLIDAYS");
+                    holidayArray.stream().forEach((d) -> {
+                        System.out.println(dateFormat.format(d));
+                    });
+
+                    return holidayArray;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
     }
 }
