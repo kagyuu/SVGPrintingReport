@@ -30,4 +30,4 @@ do
 done
 
 # CONBINE A BLANK PAGE AND A4 DIARY PAGES
-pdftk blanksheet-a4-portrait.pdf ./a4/* cat output diary.pdf
+pdftk blanksheet-a4-portrait.pdf ./a4/* blanksheet-a4-portrait.pdf cat output diary.pdf

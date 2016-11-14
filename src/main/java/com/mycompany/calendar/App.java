@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.attribute.PosixFilePermission;
 import java.text.DateFormat;
@@ -58,13 +57,13 @@ public class App {
         
         cal.setTime(holidays.get(0));
         maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
-        for (int week = 1; week <= maxWeek; week++) {
+        for (int week = 0; week <= maxWeek; week++) {
             createSvgCal(cal.get(Calendar.YEAR), week);
         }
 
-        for (int week = 1; week <= 14; week++) {
-            createSvgCal(cal.get(Calendar.YEAR) + 1, week);
-        }
+//        for (int week = 1; week <= 14; week++) {
+//            createSvgCal(cal.get(Calendar.YEAR) + 1, week);
+//        }
         
         // copy shells
         Set<PosixFilePermission> perm = new HashSet<>();
@@ -306,10 +305,6 @@ public class App {
                     String line;
                     while ((line = r.readLine()) != null) {
                         String[] part = line.split(",");
-                        try {
-                            holidayArray.add(df.parse(part[1]));
-                        } catch (ParseException | ArrayIndexOutOfBoundsException e) {
-                        }
                         try {
                             holidayArray.add(df.parse(part[3]));
                         } catch (ParseException | ArrayIndexOutOfBoundsException e) {
