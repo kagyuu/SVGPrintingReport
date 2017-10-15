@@ -54,8 +54,7 @@ public class App {
         Calendar cal = Calendar.getInstance();
         int maxWeek;
 
-        
-        cal.setTime(holidays.get(0));
+        cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
         maxWeek = cal.getActualMaximum(Calendar.WEEK_OF_YEAR) + 1;
         for (int week = 0; week <= maxWeek; week++) {
             createSvgCal(cal.get(Calendar.YEAR), week);
@@ -300,13 +299,13 @@ public class App {
                 new InputStreamReader(
                         new FileInputStream("src/main/resources/syukujitsu.csv")))) {
 
-                    DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     List<Date> holidayArray = new ArrayList<>();
                     String line;
                     while ((line = r.readLine()) != null) {
                         String[] part = line.split(",");
                         try {
-                            holidayArray.add(df.parse(part[3]));
+                            holidayArray.add(df.parse(part[0]));
                         } catch (ParseException | ArrayIndexOutOfBoundsException e) {
                         }
                     }

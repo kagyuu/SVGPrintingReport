@@ -6,8 +6,9 @@ SVGPrintingReport
 
   - 休日の (法律上の) 一次情報は内閣府です http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
   - 年後半になると、来年度の休日が発表されます
-  - http://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv をダウンロードして、振替休日を追加してください
-  - SVGPrintingReport は、4 列目 (来年) の休日定義の最初の日 (元日) の年の日記帳を造ります
+  - http://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv をダウンロードして、振替休日を追加してください 
+    - 「2月12日、4月30日、9月24日、12月24日 は休日となります。」などと書かれています
+  - SVGPrintingReport は、来年の日記帳を造ります
 
 1. App.java を実行すると、デスクトップ/Cal に、日記帳の SVG 画像ができます
 
