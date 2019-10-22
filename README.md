@@ -15,11 +15,15 @@ SVGPrintingReport
 1. createBook.sh を実行します
 
   - いくつか文書管理アプリが必要です
-  - inkscape (macOS の場合 homebrew でインストール)
-  - ghostscript (macOS の場合 homebrew でインストール)
-  - pdftk (macOS の場合 homebrew 版だめ (2017年現在))
-    - http://stackoverflow.com/questions/32505951/pdftk-server-on-os-x-10-11
-    - 必要があれば brew unlink pkftk でアンインストールして
-    - https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg をインストール
+  - macOS の場合
+    - inkscape (macOS の場合 homebrew でインストール)
+    - ghostscript (macOS の場合 homebrew でインストール)
+    - pdftk (macOS の場合 homebrew 版だめ (2017年現在))
+      - http://stackoverflow.com/questions/32505951/pdftk-server-on-os-x-10-11
+      - 必要があれば brew unlink pkftk でアンインストールして
+      - https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg をインストール
+  - Ubuntu 18 (Linux Mint 19) の場合
+    - apt install inkscape ghostscript
+    - pdftk は、GCJ の権利関係の問題で apt に入っていないので、自分でビルドする https://hondou.homedns.org/pukiwiki/index.php?Linux%20pdftk%20for%20Ubuntu18
 
 1. diary.pdf ができるので、あとは普通に両面印刷する
