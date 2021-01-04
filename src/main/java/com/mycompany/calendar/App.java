@@ -39,8 +39,9 @@ public class App {
     private static final String[] IDX = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H"};
 
     /**
-     * 休日 (内閣府発表 http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html) から
+     * 休日 (内閣府発表 https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html) から
      * syukujitsu.csv をダウンロードして /src/main/resources に配置する
+     * $ wget https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv
      */
     private static List<Date> holidays;
 
@@ -297,9 +298,9 @@ public class App {
     private static List<Date> readSyukujitsu() {
         try (BufferedReader r = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream("src/main/resources/syukujitsu.csv")))) {
+                        new FileInputStream("src/main/resources/syukujitsu.csv"),"UTF-8"))) {
 
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
                     List<Date> holidayArray = new ArrayList<>();
                     String line;
                     while ((line = r.readLine()) != null) {
