@@ -8,13 +8,18 @@ SVGPrintingReport
   - 年後半になると、来年度の休日が発表されます
   - https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv をダウンロードして、振替休日を追加してください 
     - 「2月12日、4月30日、9月24日、12月24日 は休日となります。」などと書かれています
+    ```
+    $ curl https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv | iconv -f SJIS -t UTF-8 | tee syukujitsu.csv 
+    ```
   - SVGPrintingReport は、来年の日記帳を造ります
 
 2. App.java を実行すると、デスクトップ/Cal に、日記帳の SVG 画像ができます
-```
-$ mvn package
-$ java -jar target/Calendar.jar
-```
+
+  ```
+  $ mvn package
+  $ java -jar target/Calendar.jar
+  ```
+  
 3. createBook.sh を実行します
 
   - いくつか文書管理アプリが必要です
