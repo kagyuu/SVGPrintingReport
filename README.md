@@ -10,9 +10,12 @@ SVGPrintingReport
     - 「2月12日、4月30日、9月24日、12月24日 は休日となります。」などと書かれています
   - SVGPrintingReport は、来年の日記帳を造ります
 
-1. App.java を実行すると、デスクトップ/Cal に、日記帳の SVG 画像ができます
-
-1. createBook.sh を実行します
+2. App.java を実行すると、デスクトップ/Cal に、日記帳の SVG 画像ができます
+```
+$ mvn package
+$ java -jar target/Calendar.jar
+```
+3. createBook.sh を実行します
 
   - いくつか文書管理アプリが必要です
   - macOS の場合
@@ -25,5 +28,4 @@ SVGPrintingReport
   - Ubuntu 18 (Linux Mint 19) の場合
     - apt install inkscape ghostscript
     - pdftk は、GCJ の権利関係の問題で apt に入っていないので、自分でビルドする https://hondou.homedns.org/pukiwiki/index.php?Linux%20pdftk%20for%20Ubuntu18
-
-1. diary.pdf ができるので、あとは普通に両面印刷する
+4. diary.pdf ができるので、あとは普通に両面印刷する
