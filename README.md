@@ -4,9 +4,9 @@ SVGPrintingReport
 
 1. 最初に休日定義 (src/main/resources/syukujitsu.csv ) を更新してください。
 
-  - 休日の (法律上の) 一次情報は内閣府です http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
+  - 休日の (法律上の) 一次情報は内閣府です https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
   - 年後半になると、来年度の休日が発表されます
-  - http://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv をダウンロードして、振替休日を追加してください 
+  - https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv をダウンロードして、振替休日を追加してください 
     - 「2月12日、4月30日、9月24日、12月24日 は休日となります。」などと書かれています
   - SVGPrintingReport は、来年の日記帳を造ります
 
