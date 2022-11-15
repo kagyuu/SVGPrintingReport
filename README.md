@@ -32,5 +32,5 @@ SVGPrintingReport
       - https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg をインストール
   - Ubuntu 18 (Linux Mint 19) の場合
     - apt install inkscape ghostscript
-    - pdftk は、GCJ の権利関係の問題で apt に入っていないので、自分でビルドする https://hondou.homedns.org/pukiwiki/index.php?Linux%20pdftk%20for%20Ubuntu18
+    - pdftk は、GCJ の権利関係の問題で apt に入っていないので、自分でビルドする https://at-sushi.com/pukiwiki/index.php?Linux%20pdftk%20for%20Ubuntu18
 4. diary.pdf ができるので、あとは普通に両面印刷する
